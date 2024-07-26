@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web3.js Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.7.3/dist/web3.min.js"></script>
+</head>
+<body>
+  <h1>Web3.js Example</h1>
+
+  <button onclick="getGasEstimate()">Get Gas Estimate</button>
+  <button onclick="getBlockHeight()">Get Block Height</button>
+
+  <p id="result"></p>
+
+  <script>
+    // Inicializar la instancia de Web3 con un proveedor de Ethereum
+    var web3 = new Web3('http://localhost/rpcPersonalizado/rpc.php');
+
+    function getGasEstimate() {
+      // Definir los parámetros de la transacción
+      var txParams = {
+        to: '0x1234567890123456789012345678901234567890',
+        value: web3.utils.toWei('1', 'ether')
+      };
+
+      // Estimar el gas requerido para la transacción
+      web3.eth.estimateGas(txParams)
+        .then(function(gasAmount) {
+          document.getElementById('result').textContent = 'Gas estimate: ' + gasAmount + ' gas';
+        })
+        .catch(function(error) {
+          document.getElementById('result').textContent = 'Error: ' + error.message;
+        });
+    }
+
+    function getBlockHeight() {
+      // Obtener el número del bloque actual
+      web3.eth.getBlockNumber()
+        .then(function(blockNumber) {
+          document.getElementById('result').textContent = 'Current block height: ' + blockNumber;
+        })
+        .catch(function(error) {
+          document.getElementById('result').textContent = 'Error: ' + error.message;
+        });
+    }
+  </script>
+</body>
+</html>
